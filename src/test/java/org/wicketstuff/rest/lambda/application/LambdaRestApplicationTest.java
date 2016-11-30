@@ -21,6 +21,7 @@ import java.util.Map;
 
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.WicketTestCase;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Test;
@@ -45,6 +46,12 @@ public class LambdaRestApplicationTest extends WicketTestCase
 		restMounter.get("/testget", (attributes) -> "hello!");
 		restMounter.post("/testjson", (attributes) -> map, JSONObject::valueToString);
 		
+		restMounter.options("/testparam/${id}", (attributes) -> {
+				PageParameters pageParameters = attributes.getPageParameters();
+				return pageParameters.get("id");
+			}
+		);
+		
 		return tester;
 	}
 	
@@ -65,6 +72,11 @@ public class LambdaRestApplicationTest extends WicketTestCase
 		tester.executeUrl("./testjson");
 		
 		assertEquals(JSONObject.valueToString(map), 
-				tester.getLastResponseAsString());		
+				tester.getLastResponseAsString());	
+		
+		tester.getRequest().setMethod("OPTIONS");
+		tester.executeUrl("./testparam/45");
+		
+		assertEquals("45", tester.getLastResponseAsString());
 	}
 }
