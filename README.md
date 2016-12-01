@@ -16,6 +16,13 @@ Module to write microservices with Wicket musch like we do with [Spark](http://s
             
             restMounter.get("/testget", (attributes) -> "hello!");
             restMounter.post("/testjson", (attributes) -> map, JSONObject::valueToString);
+            
+            //return id value from url segment
+            restMounter.options("/testparam/${id}", (attributes) -> {
+                PageParameters pageParameters = attributes.getPageParameters();
+                return pageParameters.get("id");
+               }
+            );
         }
     }
 
