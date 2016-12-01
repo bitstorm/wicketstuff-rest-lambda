@@ -1,7 +1,7 @@
 Wicket Rest Lambda
 ===
 
-Module to write microservices with Wicket in a functional way, as we do with [Spark](http://sparkjava.com/):
+Module to write microservices with Wicket in a functional way, as we do with [Spark](http://sparkjava.com/). the parameter `attributes` is an instanace of [AttributesWrapper](http://static.javadoc.io/org.wicketstuff/wicketstuff-restannotations/7.5.0/org/wicketstuff/rest/utils/wicket/AttributesWrapper.html):
 ```java
     public class MyApplication extends WebApplication 
     {
