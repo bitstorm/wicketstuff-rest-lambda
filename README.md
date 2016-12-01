@@ -1,7 +1,7 @@
 Wicket Rest Lambda
 ===
 
-Module to write microservices with Wicket musch like we do with [Spark](http://sparkjava.com/):
+Module to write microservices with Wicket in a functional way, as we do with [Spark](http://sparkjava.com/):
 
     public class MyApplication extends WebApplication 
     {
