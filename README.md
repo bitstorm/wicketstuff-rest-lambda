@@ -2,7 +2,7 @@ Wicket Rest Lambda
 ===
 
 Module to write microservices with Wicket in a functional way, as we do with [Spark](http://sparkjava.com/):
-
+```java
     public class MyApplication extends WebApplication 
     {
         @Override
@@ -25,4 +25,4 @@ Module to write microservices with Wicket in a functional way, as we do with [Sp
             );
         }
     }
-
+```
