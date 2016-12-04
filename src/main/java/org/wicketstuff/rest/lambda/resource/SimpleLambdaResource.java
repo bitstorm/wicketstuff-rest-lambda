@@ -16,6 +16,10 @@
  */
 package org.wicketstuff.rest.lambda.resource;
 
+import java.util.Optional;
+import java.util.function.Consumer;
+
+import org.apache.wicket.request.http.WebResponse;
 import org.apache.wicket.request.resource.IResource;
 import org.danekja.java.util.function.serializable.SerializableFunction;
 import org.wicketstuff.rest.utils.wicket.AttributesWrapper;
@@ -43,12 +47,10 @@ public class SimpleLambdaResource implements IResource
 	public void respond(Attributes attributes) 
 	{
 		AttributesWrapper attributesWrapper = new AttributesWrapper(attributes);
-		Object respondResult = respondFunction.apply(attributesWrapper);
+		Optional<?> respondResult = Optional.of(respondFunction.apply(attributesWrapper));
+		WebResponse webResponse = attributesWrapper.getWebResponse();
+		Consumer<Object> writeToResponse = (result) -> webResponse.write(outputTextFunction.apply(result));
 		
-		if (respondResult != null) 
-		{
-			attributesWrapper.getWebResponse()
-			   .write(outputTextFunction.apply(respondResult));			
-		}
+		respondResult.ifPresent(writeToResponse);
 	}
 }
