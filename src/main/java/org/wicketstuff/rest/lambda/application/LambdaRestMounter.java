@@ -18,10 +18,13 @@ package org.wicketstuff.rest.lambda.application;
 
 import org.apache.wicket.core.request.mapper.ResourceMapper;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.request.resource.ResourceReference;
+import org.danekja.java.util.function.serializable.SerializableConsumer;
 import org.danekja.java.util.function.serializable.SerializableFunction;
 import org.wicketstuff.rest.lambda.request.mapper.RestResourceMapper;
 import org.wicketstuff.rest.lambda.resource.SimpleLambdaResource;
+import org.wicketstuff.rest.lambda.resource.TextOutputLambdaResource;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.wicket.AttributesWrapper;
 
@@ -34,99 +37,113 @@ public class LambdaRestMounter
 		this.application = application;
 	}
 
-	public void post(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction)
-	{
-		this.post(path, respondFunction, (object) -> object.toString());
-	}
 	
 	public void post(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction,
-			final SerializableFunction<Object, String> outputTextFunction) 
+			final SerializableFunction<Object, String> outputFunction) 
 	{		
-		mountRestResource(HttpMethod.POST, path, respondFunction, outputTextFunction);
+		mountRestResource(HttpMethod.POST, path, respondFunction, outputFunction);
+	}
+	
+	public void post(final String path, final SerializableConsumer<AttributesWrapper> respondConsumer) 
+	{		
+		mountRestResource(HttpMethod.POST, path, respondConsumer);
 	}
 
-	public void get(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction)
-	{
-		this.get(path, respondFunction, (object) -> object.toString());
-	}
 	
 	public void get(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction,
-			final SerializableFunction<Object, String> outputTextFunction) 
+			final SerializableFunction<Object, String> outputFunction) 
 	{		
-		mountRestResource(HttpMethod.GET, path, respondFunction, outputTextFunction);
+		mountRestResource(HttpMethod.GET, path, respondFunction, outputFunction);
 	}
 	
-	public void put(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction)
+	public void get(final String path, final SerializableConsumer<AttributesWrapper> respondConsumer) 
+	{		
+		mountRestResource(HttpMethod.GET, path, respondConsumer);
+	}
+	
+	public void put(final String path, final SerializableConsumer<AttributesWrapper> respondConsumer)
 	{
-		this.put(path, respondFunction, (object) -> object.toString());
+		mountRestResource(HttpMethod.PUT, path, respondConsumer);
 	}
 	
 	public void put(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction,
-			final SerializableFunction<Object, String> outputTextFunction) 
+			final SerializableFunction<Object, String> outputFunction) 
 	{		
-		mountRestResource(HttpMethod.PUT, path, respondFunction, outputTextFunction);
+		mountRestResource(HttpMethod.PUT, path, respondFunction, outputFunction);
 	}
 	
-	public void delete(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction)
+	public void delete(final String path, final SerializableConsumer<AttributesWrapper> respondConsumer)
 	{
-		this.delete(path, respondFunction, (object) -> object.toString());
+		mountRestResource(HttpMethod.DELETE, path, respondConsumer);
 	}
 	
 	public void delete(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction,
-			final SerializableFunction<Object, String> outputTextFunction) 
+			final SerializableFunction<Object, String> outputFunction) 
 	{		
-		mountRestResource(HttpMethod.DELETE, path, respondFunction, outputTextFunction);
+		mountRestResource(HttpMethod.DELETE, path, respondFunction, outputFunction);
 	}
 	
-	public void options(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction)
+	public void options(final String path, final SerializableConsumer<AttributesWrapper> respondConsumer)
 	{
-		this.options(path, respondFunction, (object) -> object.toString());
+		mountRestResource(HttpMethod.OPTIONS, path, respondConsumer);
 	}
 	
 	public void options(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction,
-			final SerializableFunction<Object, String> outputTextFunction) 
+			final SerializableFunction<Object, String> outputFunction) 
 	{		
-		mountRestResource(HttpMethod.OPTIONS, path, respondFunction, outputTextFunction);
+		mountRestResource(HttpMethod.OPTIONS, path, respondFunction, outputFunction);
 	}
 	
-	public void patch(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction)
+	public void patch(final String path, final SerializableConsumer<AttributesWrapper> respondConsumer)
 	{
-		this.patch(path, respondFunction, (object) -> object.toString());
+		mountRestResource(HttpMethod.PATCH, path, respondConsumer);
 	}
 
 	public void patch(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction,
-			final SerializableFunction<Object, String> outputTextFunction) 
+			final SerializableFunction<Object, String> outputFunction) 
 	{		
-		mountRestResource(HttpMethod.PATCH, path, respondFunction, outputTextFunction);
+		mountRestResource(HttpMethod.PATCH, path, respondFunction, outputFunction);
 	}
 	
-	public void head(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction)
+	public void head(final String path, final SerializableConsumer<AttributesWrapper> respondConsumer)
 	{
-		this.head(path, respondFunction, (object) -> object.toString());
+		mountRestResource(HttpMethod.HEAD, path, respondConsumer);
 	}
 
 	public void head(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction,
-			final SerializableFunction<Object, String> outputTextFunction) 
+			final SerializableFunction<Object, String> outputFunction) 
 	{		
-		mountRestResource(HttpMethod.HEAD, path, respondFunction, outputTextFunction);
+		mountRestResource(HttpMethod.HEAD, path, respondFunction, outputFunction);
 	}
 	
-	public void trace(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction)
+	public void trace(final String path, final SerializableConsumer<AttributesWrapper> respondConsumer)
 	{
-		this.trace(path, respondFunction, (object) -> object.toString());
+		mountRestResource(HttpMethod.TRACE, path, respondConsumer);
 	}
 
 	public void trace(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction,
-			final SerializableFunction<Object, String> outputTextFunction) 
+			final SerializableFunction<Object, String> outputFunction) 
 	{		
-		mountRestResource(HttpMethod.TRACE, path, respondFunction, outputTextFunction);
+		mountRestResource(HttpMethod.TRACE, path, respondFunction, outputFunction);
 	}
 	
 	public ResourceMapper mountRestResource(final HttpMethod httpMethod, final String path, 
 											final SerializableFunction<AttributesWrapper, Object> respondFunction,
-											final SerializableFunction<Object, String> outputTextFunction)
+											final SerializableFunction<Object, String> outputFunction)
 	{
-		SimpleLambdaResource resource = new SimpleLambdaResource(respondFunction, outputTextFunction);
+		TextOutputLambdaResource resource = new TextOutputLambdaResource(respondFunction, outputFunction);
+		return mountRestResource(httpMethod, path, resource);
+	}
+
+	public ResourceMapper mountRestResource(final HttpMethod httpMethod, final String path, 
+			final SerializableConsumer<AttributesWrapper> respondConsumer)
+	{
+		SimpleLambdaResource resource = new SimpleLambdaResource(respondConsumer);
+		return mountRestResource(httpMethod, path, resource);
+	}
+
+	protected ResourceMapper mountRestResource(final HttpMethod httpMethod, final String path,
+			IResource resource) {
 		ResourceReference reference = ResourceReference.of(path + "_" + httpMethod.name(), () -> resource);
 		
 		if (reference.canBeRegistered())

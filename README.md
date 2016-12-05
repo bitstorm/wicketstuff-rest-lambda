@@ -15,7 +15,7 @@ Module to write microservices with Wicket in a functional way, as we do with [Sp
             LambdaRestMounter restMounter = new LambdaRestMounter(this);
             
             //return plain string
-            restMounter.get("/testget", (attributes) -> "hello!");
+            restMounter.get("/testget", (attributes) -> "hello!", Object::toString);
             //specify a function to transform the returned object into text (json in this case)
             restMounter.post("/testjson", (attributes) -> map, JSONObject::valueToString);
             
@@ -24,7 +24,7 @@ Module to write microservices with Wicket in a functional way, as we do with [Sp
                 PageParameters pageParameters = attributes.getPageParameters();
                 return pageParameters.get("id");
                }
-            );
+            , Object::toString);
         }
     }
 ```

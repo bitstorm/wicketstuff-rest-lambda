@@ -43,14 +43,14 @@ public class LambdaRestApplicationTest extends WicketTestCase
 
 		LambdaRestMounter restMounter = new LambdaRestMounter(app);
 		
-		restMounter.get("/testget", (attributes) -> "hello!");
+		restMounter.get("/testget", (attributes) -> "hello!", Object::toString);
 		restMounter.post("/testjson", (attributes) -> map, JSONObject::valueToString);
-		
+
 		restMounter.options("/testparam/${id}", (attributes) -> {
 				PageParameters pageParameters = attributes.getPageParameters();
 				return pageParameters.get("id");
 			}
-		);
+		, Object::toString);
 		
 		return tester;
 	}
