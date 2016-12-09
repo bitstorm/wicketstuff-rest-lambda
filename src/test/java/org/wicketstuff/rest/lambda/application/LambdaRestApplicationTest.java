@@ -24,6 +24,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Test;
+import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.test.RestTestCase;
 
 public class LambdaRestApplicationTest extends RestTestCase 
@@ -60,30 +61,10 @@ public class LambdaRestApplicationTest extends RestTestCase
 	@Test
 	public void testResources() throws Exception 
 	{
-		tester.getRequest().setMethod("POST");
-		tester.executeUrl("./testget");
-		
-		assertTrue(tester.getLastResponseAsString().isEmpty());
-		
-		tester.getRequest().setMethod("GET");
-		tester.executeUrl("./testget");
-		
-		assertEquals("hello!", tester.getLastResponseAsString());
-
-		tester.getRequest().setMethod("POST");
-		tester.executeUrl("./testjson");
-		
-		assertEquals(JSONObject.valueToString(map), 
-				tester.getLastResponseAsString());	
-		
-		tester.getRequest().setMethod("OPTIONS");
-		tester.executeUrl("./testparam/45");
-		
-		assertEquals("45", tester.getLastResponseAsString());
-		
-		tester.getRequest().setMethod("DELETE");
-		tester.executeUrl("./deleteit");
-		
-		assertEquals("deleted", tester.getLastResponseAsString());
+		assertUrlResponse("./testget", HttpMethod.POST, "");
+		assertUrlResponse("./testget", HttpMethod.GET, "hello!");
+		assertUrlResponse("./testjson", HttpMethod.POST, JSONObject.valueToString(map));
+		assertUrlResponse("./testparam/45", HttpMethod.OPTIONS, "45");
+		assertUrlResponse("./deleteit", HttpMethod.DELETE, "deleted");
 	}
 }

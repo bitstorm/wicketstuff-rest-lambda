@@ -141,7 +141,8 @@ public class LambdaRestMounter
 	}
 
 	protected ResourceMapper mountRestResource(final HttpMethod httpMethod, final String path,
-			IResource resource) {
+			IResource resource) 
+	{
 		ResourceReference reference = ResourceReference.of(path + "_" + httpMethod.name(), () -> resource);
 		
 		if (reference.canBeRegistered())
