@@ -22,11 +22,11 @@ import java.util.Map;
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.util.tester.WicketTestCase;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Test;
+import org.wicketstuff.rest.utils.test.RestTestCase;
 
-public class LambdaRestApplicationTest extends WicketTestCase 
+public class LambdaRestApplicationTest extends RestTestCase 
 {
 	final Map<String, Object> map = new HashMap<>();
 
@@ -40,7 +40,6 @@ public class LambdaRestApplicationTest extends WicketTestCase
 	protected WicketTester newWicketTester(WebApplication app) 
 	{
 		WicketTester tester = super.newWicketTester(app);
-
 		LambdaRestMounter restMounter = new LambdaRestMounter(app);
 		
 		restMounter.get("/testget", (attributes) -> "hello!", Object::toString);
@@ -51,6 +50,9 @@ public class LambdaRestApplicationTest extends WicketTestCase
 				return pageParameters.get("id");
 			}
 		, Object::toString);
+		
+		restMounter.delete("/deleteit", (attributes) -> 
+			attributes.getWebResponse().write("deleted"));
 		
 		return tester;
 	}
@@ -78,5 +80,10 @@ public class LambdaRestApplicationTest extends WicketTestCase
 		tester.executeUrl("./testparam/45");
 		
 		assertEquals("45", tester.getLastResponseAsString());
+		
+		tester.getRequest().setMethod("DELETE");
+		tester.executeUrl("./deleteit");
+		
+		assertEquals("deleted", tester.getLastResponseAsString());
 	}
 }

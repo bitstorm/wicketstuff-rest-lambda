@@ -37,7 +37,6 @@ public class LambdaRestMounter
 		this.application = application;
 	}
 
-	
 	public void post(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction,
 			final SerializableFunction<Object, String> outputFunction) 
 	{		
@@ -48,7 +47,6 @@ public class LambdaRestMounter
 	{		
 		mountRestResource(HttpMethod.POST, path, respondConsumer);
 	}
-
 	
 	public void get(final String path, final SerializableFunction<AttributesWrapper, Object> respondFunction,
 			final SerializableFunction<Object, String> outputFunction) 
