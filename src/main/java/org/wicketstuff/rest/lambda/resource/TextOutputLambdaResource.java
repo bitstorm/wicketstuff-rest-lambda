@@ -49,7 +49,8 @@ public class TextOutputLambdaResource implements IResource
 		AttributesWrapper attributesWrapper = new AttributesWrapper(attributes);
 		Optional<?> respondResult = Optional.of(respondFunction.apply(attributesWrapper));
 		WebResponse webResponse = attributesWrapper.getWebResponse();
-		Consumer<Object> writeToResponse = (result) -> webResponse.write(outputTextFunction.apply(result));
+		Consumer<Object> writeToResponse = (result) -> 
+			webResponse.write(outputTextFunction.apply(result));
 		
 		respondResult.ifPresent(writeToResponse);
 	}

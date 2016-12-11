@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.wicketstuff.rest.lambda.application;
+package org.wicketstuff.rest.lambda.mounter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +24,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Test;
+import org.wicketstuff.rest.lambda.mounter.LambdaRestMounter;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.test.RestTestCase;
 
