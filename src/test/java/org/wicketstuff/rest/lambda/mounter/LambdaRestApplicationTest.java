@@ -16,47 +16,18 @@
  */
 package org.wicketstuff.rest.lambda.mounter;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.wicket.ajax.json.JSONObject;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Test;
-import org.wicketstuff.rest.lambda.mounter.LambdaRestMounter;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.test.RestTestCase;
 
 public class LambdaRestApplicationTest extends RestTestCase 
-{
-	final Map<String, Object> map = new HashMap<>();
-
-	public LambdaRestApplicationTest() 
-	{
-		map.put("integer", 123);
-		map.put("string", "message");
-	}
-	
+{	
 	@Override
-	protected WicketTester newWicketTester(WebApplication app) 
+	protected WebApplication newApplication() 
 	{
-		WicketTester tester = super.newWicketTester(app);
-		LambdaRestMounter restMounter = new LambdaRestMounter(app);
-		
-		restMounter.get("/testget", (attributes) -> "hello!", Object::toString);
-		restMounter.post("/testjson", (attributes) -> map, JSONObject::valueToString);
-
-		restMounter.options("/testparam/${id}", (attributes) -> {
-				PageParameters pageParameters = attributes.getPageParameters();
-				return pageParameters.get("id");
-			}
-		, Object::toString);
-		
-		restMounter.delete("/deleteit", (attributes) -> 
-			attributes.getWebResponse().write("deleted"));
-		
-		return tester;
+		return new TestApplication();
 	}
 	
 	@Test
@@ -64,7 +35,7 @@ public class LambdaRestApplicationTest extends RestTestCase
 	{
 		assertUrlResponse("./testget", HttpMethod.POST, "");
 		assertUrlResponse("./testget", HttpMethod.GET, "hello!");
-		assertUrlResponse("./testjson", HttpMethod.POST, JSONObject.valueToString(map));
+		assertUrlResponse("./testjson", HttpMethod.POST, JSONObject.valueToString(TestApplication.map));
 		assertUrlResponse("./testparam/45", HttpMethod.OPTIONS, "45");
 		assertUrlResponse("./deleteit", HttpMethod.DELETE, "deleted");
 	}
