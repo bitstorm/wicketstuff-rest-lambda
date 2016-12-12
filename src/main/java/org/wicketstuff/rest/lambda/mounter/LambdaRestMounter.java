@@ -28,6 +28,15 @@ import org.wicketstuff.rest.lambda.resource.TextOutputLambdaResource;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.wicket.AttributesWrapper;
 
+/**
+ * REST resource mounter. The resources are built using the provided functions/consumers.
+ * 
+ * @see SimpleLambdaResource
+ * @see TextOutputLambdaResource
+ * 
+ * @author andrea
+ *
+ */
 public class LambdaRestMounter
 {
 	private final WebApplication application;

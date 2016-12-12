@@ -23,11 +23,28 @@ import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketstuff.rest.utils.http.HttpMethod;
 import org.wicketstuff.rest.utils.http.HttpUtils;
 
+/**
+ * 
+ * Specialization of {@link ResourceMapper} to mount REST resources.
+ * 
+ * @author andrea
+ *
+ */
 public class RestResourceMapper extends ResourceMapper 
 {
 
 	private final HttpMethod httpMethod;
 
+	/**
+	 * Constructor for the mapper
+	 * 
+	 * @param path
+	 * 				mount path for the resource
+	 * @param resourceReference
+	 * 				resource reference that should be linked to the mount path
+	 * @param httpMethod
+	 * 				the HTTP method used by the resource
+	 */
 	public RestResourceMapper(String path, ResourceReference resourceReference, HttpMethod httpMethod) 
 	{
 		super(path, resourceReference);

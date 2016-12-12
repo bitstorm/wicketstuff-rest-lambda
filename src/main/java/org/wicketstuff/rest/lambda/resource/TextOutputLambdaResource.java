@@ -24,6 +24,15 @@ import org.apache.wicket.request.resource.IResource;
 import org.danekja.java.util.function.serializable.SerializableFunction;
 import org.wicketstuff.rest.utils.wicket.AttributesWrapper;
 
+/**
+ * {@link IResource} that uses a {@link java.util.function.Function} to serve
+ * the request. The result of this function (a generic Object) is then written 
+ * as string to the web response. A second function is provided to transform 
+ * the result a textual representation.
+ * 
+ * @author andrea
+ *
+ */
 public class TextOutputLambdaResource implements IResource 
 {
 
@@ -36,6 +45,14 @@ public class TextOutputLambdaResource implements IResource
 
 	final private SerializableFunction<Object, String> outputTextFunction; 
 	
+	/**
+	 * Build a new resource using the two provided functions.
+	 * 
+	 * @param respondFunction
+	 * 				the function used to respond requests
+	 * @param outputTextFunction
+	 * 				the function used to convert the respond result to text.
+	 */
 	public TextOutputLambdaResource(SerializableFunction<AttributesWrapper, Object> respondFunction,
 			SerializableFunction<Object, String> outputTextFunction) 
 	{

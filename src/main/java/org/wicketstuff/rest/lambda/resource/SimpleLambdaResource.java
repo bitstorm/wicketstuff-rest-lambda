@@ -20,6 +20,13 @@ import org.apache.wicket.request.resource.IResource;
 import org.danekja.java.util.function.serializable.SerializableConsumer;
 import org.wicketstuff.rest.utils.wicket.AttributesWrapper;
 
+/**
+ * Basic {@link IResource} that uses a {@link java.util.function.Consumer} to serve
+ * the request.
+ * 
+ * @author andrea
+ *
+ */
 public class SimpleLambdaResource implements IResource {
 
 	/**
@@ -29,6 +36,13 @@ public class SimpleLambdaResource implements IResource {
 	
 	protected final SerializableConsumer<AttributesWrapper> respondConsumer;
 
+	/**
+	 * Build a new resource providing the {@link java.util.function.Consumer}
+	 * for a {@link AttributesWrapper} parameter
+	 * 
+	 * @param respondConsumer
+	 * 			the cosnumer.
+	 */
 	public SimpleLambdaResource(SerializableConsumer<AttributesWrapper> respondConsumer) 
 	{
 		this.respondConsumer = respondConsumer;
